@@ -53,7 +53,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="ProductList">
 const labelData = [
   "商品",
   "商品名",

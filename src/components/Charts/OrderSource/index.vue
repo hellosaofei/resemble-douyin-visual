@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="OrderSource">
 import { Chart } from "@/components";
 
 const props = defineProps({

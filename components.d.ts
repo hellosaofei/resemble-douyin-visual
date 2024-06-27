@@ -9,18 +9,19 @@ declare module 'vue' {
   export interface GlobalComponents {
     ChartTemplate: typeof import('./src/components/Chart/ChartTemplate.vue')['default']
     CountTo: typeof import('./src/components/CountTo/index.vue')['default']
+    DataPanel: typeof import('./src/components/DataPanel/index.vue')['default']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
-    OrderSource: typeof import('./src/components/OrderSource/index.vue')['default']
-    PopularityTrend: typeof import('./src/components/PopularityTrend/index.vue')['default']
+    OrderSource: typeof import('./src/components/Charts/OrderSource/index.vue')['default']
+    PopularityTrend: typeof import('./src/components/Charts/PopularityTrend/index.vue')['default']
     ProductList: typeof import('./src/components/ProductList/index.vue')['default']
     RealTimeLive: typeof import('./src/components/RealTimeLive/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TitleBar: typeof import('./src/components/TitleBar/index.vue')['default']
     TotalData: typeof import('./src/components/TotalData/index.vue')['default']
-    TransactionTrend: typeof import('./src/components/TransactionTrend/index.vue')['default']
-    UserPortrait: typeof import('./src/components/UserPortrait/index.vue')['default']
+    TransactionTrend: typeof import('./src/components/Charts/TransactionTrend/index.vue')['default']
+    UserPortrait: typeof import('./src/components/Charts/UserPortrait/index.vue')['default']
   }
 }

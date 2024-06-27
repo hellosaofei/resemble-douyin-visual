@@ -24,7 +24,7 @@
       <!-- 项目标题 -->
       <TitleBar class="h-1/8 p-1 mt-2" />
       <!-- 数据总览图 -->
-      <TotalData class="flex-1 bg-opacity-50 bg-[#6b67fa] p-1 mt-2" />
+      <DataPanel class="flex-1 bg-opacity-50 bg-[#6b67fa] p-1 mt-2" />
       <!-- 商品列表 -->
       <ProductList class="flex-1 bg-opacity-50 bg-slate-800 mt-2 rounded-lg" />
     </div>
@@ -43,16 +43,13 @@
 </template>
 
 <script setup lang="ts">
+import { RealTimeLive, TitleBar, DataPanel, ProductList } from "@/components";
 import {
   OrderSource,
   PopularityTrend,
-  ProductList,
-  RealTimeLive,
-  TitleBar,
   TransactionTrend,
   UserPortrait,
-  TotalData,
-} from "@/components";
+} from "@/components/Charts";
 
 const orderSourceData = [
   { value: 1048, name: "Search Engine" },
