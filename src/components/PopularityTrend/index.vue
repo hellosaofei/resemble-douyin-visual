@@ -46,6 +46,7 @@ const renderChart = () => {
     },
     legend: {
       top: "4%",
+      left: "0",
       icon: "circle",
       textStyle: {
         color: "#fff",
@@ -62,6 +63,12 @@ const renderChart = () => {
       axisPointer: {
         snap: true,
       },
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      containLabel: true,
     },
     series: [
       {
@@ -108,6 +115,9 @@ watch(
     renderChart();
   }
 );
+window.addEventListener("resize", () => {
+  chartInstance.resize();
+});
 </script>
 
 <style lang="scss" scoped></style>

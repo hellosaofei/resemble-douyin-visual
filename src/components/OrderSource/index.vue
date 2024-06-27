@@ -6,9 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import * as echarts from "echarts";
-
+import type {} from "echarts";
 const props = defineProps({
   data: {
     type: Array,
@@ -78,6 +78,9 @@ watch(
     renderChart();
   }
 );
+window.addEventListener("resize", () => {
+  chartInstance.resize();
+});
 </script>
 
 <style lang="scss" scoped></style>

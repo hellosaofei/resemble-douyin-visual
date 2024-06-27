@@ -20,13 +20,13 @@
       />
     </div>
     <!-- 中 -->
-    <div class="w-1/2 ml-3 mr-3 flex flex-col">
+    <div class="w-1/2 ml-1 mr-1 flex flex-col">
       <!-- 项目标题 -->
       <TitleBar class="h-1/8 p-1 mt-2" />
       <!-- 数据总览图 -->
       <TotalData class="flex-1 bg-opacity-50 bg-[#6b67fa] p-1 mt-2" />
       <!-- 商品列表 -->
-      <ProductList class="flex-1 bg-opacity-50 bg-slate-800 p-1 mt-2" />
+      <ProductList class="flex-1 bg-opacity-50 bg-slate-800 mt-2 rounded-lg" />
     </div>
     <!-- 右 -->
     <div class="flex-1 p-3 flex flex-col">

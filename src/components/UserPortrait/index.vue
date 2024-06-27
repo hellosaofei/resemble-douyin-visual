@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import * as echarts from "echarts";
 
 const props = defineProps({
@@ -26,6 +26,12 @@ onMounted(() => {
 
 const renderChart = () => {
   const options = {
+    grid: {
+      left: "5%",
+      right: "5%",
+      bottom: "5%",
+      containLabel: true,
+    },
     series: [
       {
         name: "男性",
@@ -134,6 +140,9 @@ watch(
     renderChart();
   }
 );
+window.addEventListener("resize", () => {
+  chartInstance.resize();
+});
 </script>
 
 <style lang="scss" scoped></style>
