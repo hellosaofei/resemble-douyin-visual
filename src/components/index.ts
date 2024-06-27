@@ -6,3 +6,4 @@ export { default as TitleBar } from "./TitleBar/index.vue";
 export { default as TransactionTrend } from "./TransactionTrend/index.vue";
 export { default as UserPortrait } from "./UserPortrait/index.vue";
 export { default as TotalData } from "./TotalData/index.vue";
+export { default as Chart } from "./Chart/ChartTemplate.vue";

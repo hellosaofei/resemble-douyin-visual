@@ -1,6 +1,13 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import "./styles/index.scss";
-// import "./assets/main.css";
 
-createApp(App).mount("#app");
+// 全局样式
+import "./styles/index.scss";
+
+// 引入Pinia和vueRouter
+import router from "@/router";
+
+const app = createApp(App);
+
+app.use(router);
+app.mount("#app");

@@ -1,14 +1,13 @@
 <template>
   <div>
     <div>订单来源</div>
-    <div ref="orderSourceRef" class="w-full h-full"></div>
+    <Chart :options="options" class="w-full h-full" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
-import * as echarts from "echarts";
-import type {} from "echarts";
+import { Chart } from "@/components";
+
 const props = defineProps({
   data: {
     type: Array,
@@ -16,71 +15,49 @@ const props = defineProps({
   },
 });
 
-let chartInstance = null;
-const orderSourceRef = ref(null);
+const options = {
+  tooltip: {
+    trigger: "item",
+  },
+  legend: {
+    right: "5%",
+    top: "center",
+    orient: "vertical",
+    icon: "circle",
 
-onMounted(() => {
-  chartInstance = echarts.init(orderSourceRef.value);
-  renderChart();
-});
-
-const renderChart = () => {
-  const options = {
-    tooltip: {
-      trigger: "item",
+    formatter: function (name) {
+      const currVal = props.data.filter((item) => item.name === name)[0].value;
+      // return `{name|${name}}{currVal||   ${currVal}}`;
+      return `${name} ${currVal}`;
     },
-    legend: {
-      right: "5%",
-      top: "center",
-      orient: "vertical",
-      icon: "circle",
-
-      formatter: function (name) {
-        const currVal = props.data.filter((item) => item.name === name)[0]
-          .value;
-        // return `{name|${name}}{currVal||   ${currVal}}`;
-        return `${name} ${currVal}`;
-      },
-      textStyle: {
-        color: "#fff",
-        fontSize: 10,
-        rich: {},
-      },
+    textStyle: {
+      color: "#fff",
+      fontSize: 10,
+      rich: {},
     },
-    series: [
-      {
-        name: "Access From",
-        type: "pie",
-        width: "50%",
-        radius: ["45%", "55%"],
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderRadius: 10,
-          borderWidth: 2,
-        },
-        label: {
-          show: false,
-          position: "center",
-        },
-        labelLine: {
-          show: false,
-        },
-        data: props.data,
+  },
+  series: [
+    {
+      name: "Access From",
+      type: "pie",
+      width: "50%",
+      radius: ["45%", "55%"],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 10,
+        borderWidth: 2,
       },
-    ],
-  };
-  chartInstance.setOption(options);
+      label: {
+        show: false,
+        position: "center",
+      },
+      labelLine: {
+        show: false,
+      },
+      data: props.data,
+    },
+  ],
 };
-
-watch(
-  () => props.data,
-  () => {
-    renderChart();
-  }
-);
-window.addEventListener("resize", () => {
-  chartInstance.resize();
-});
 </script>
 
 <style lang="scss" scoped></style>
