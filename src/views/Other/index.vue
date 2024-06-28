@@ -1,27 +1,166 @@
 <template>
-  <div class="w-1/2 h-1/2">
-    <Chart :options="options" />
+  <div class="screen-container">
+    <div class="screen-body">
+      <!-- 左 -->
+      <section class="screen-left">
+        <div class="left-top chart-card chart-description-parent-padding">
+          <div style="height: 2rem">
+            <span>成交趋势图</span>
+          </div>
+          <TransactionTrend />
+        </div>
+        <div class="left-middle chart-card chart-description-parent-padding">
+          <div style="height: 2rem">
+            <span>订单来源</span>
+          </div>
+          <OrderSource :data="orderSourceData" />
+        </div>
+        <div class="left-bottom chart-card chart-description-parent-padding">
+          <div style="height: 2rem">
+            <span>用户画像</span>
+          </div>
+          <UserPortrait :data="userProtraitData" />
+        </div>
+      </section>
+      <!-- 中 -->
+      <section class="screen-middle">
+        <div class="middle-top">
+          <TitleBar />
+        </div>
+        <div class="middle-middle chart-card">
+          <DataPanel />
+        </div>
+        <div class="middle-bottom chart-card chart-description-parent-padding">
+          <div style="height: 2rem">
+            <span>商品列表</span>
+          </div>
+          <ProductList />
+        </div>
+      </section>
+      <!-- 右 -->
+      <section class="screen-right">
+        <div class="right-top chart-card chart-description-parent-padding">
+          <div style="height: 2rem">
+            <span>人气趋势图</span>
+          </div>
+          <PopularityTrend />
+        </div>
+        <div class="right-bottom chart-card">
+          <RealTimeLive />
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Chart } from "@/components";
-
-const options = {
-  xAxis: {
-    type: "category",
-    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+import { RealTimeLive, TitleBar, DataPanel, ProductList } from "@/components";
+import {
+  OrderSource,
+  PopularityTrend,
+  TransactionTrend,
+  UserPortrait,
+} from "@/components/Charts";
+const orderSourceData = [
+  { value: 1048, name: "Search Engine" },
+  { value: 735, name: "Direct" },
+  { value: 580, name: "Email" },
+  { value: 484, name: "Union Ads" },
+  { value: 300, name: "Video Ads" },
+];
+const userProtraitData = [
+  {
+    name: "男性",
+    value: 18,
   },
-  yAxis: {
-    type: "value",
+  {
+    name: "女性",
+    value: 82,
   },
-  series: [
-    {
-      data: [150, 230, 224, 218, 135, 147, 260],
-      type: "line",
-    },
-  ],
-};
+];
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+* {
+  box-sizing: border-box;
+}
+.screen-container {
+  height: 100%;
+  width: 100%;
+  padding: 10px 60px;
+  color: #fff;
+  background: #283354;
+}
+.screen-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  column-gap: 1rem;
+  .screen-left {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.8rem;
+    width: 24%;
+    .left-top {
+      height: 34%;
+      position: relative;
+    }
+    .left-middle {
+      height: 30%;
+      position: relative;
+    }
+    .left-bottom {
+      flex-grow: 1;
+      position: relative;
+    }
+  }
+  .screen-middle {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+    flex-grow: 1;
+    width: 52%;
+    .middle-top {
+      flex: 1 1 10%;
+      min-height: 0;
+      max-height: 10%;
+      position: relative;
+    }
+    .middle-middle {
+      flex: 1 1 42%;
+      // min-height: 0;
+      // max-height: 42%;
+      position: relative;
+    }
+    .middle-bottom {
+      flex: 1 1 48%;
+      min-height: 0;
+      max-height: 48%;
+      // flex-grow: 0;
+      position: relative;
+      overflow: hidden;
+    }
+  }
+  .screen-right {
+    width: 24%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.8rem;
+    .right-top {
+      height: 35%;
+      position: relative;
+    }
+    .right-bottom {
+      flex-grow: 1;
+      position: relative;
+    }
+  }
+}
+.chart-description-parent-padding {
+  padding: 12px 8px;
+}
+.chart-card {
+  border-radius: 8px;
+  background: #1e293b4d;
+}
+</style>

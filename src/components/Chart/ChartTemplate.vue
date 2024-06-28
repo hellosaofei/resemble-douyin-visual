@@ -1,5 +1,5 @@
 <template>
-  <div ref="chartRef"></div>
+  <div ref="chartRef" :style="{ height: height, width: width }"></div>
 </template>
 
 <script setup lang="ts">
@@ -13,7 +13,7 @@ let chartRef = ref(null);
 let props = defineProps({
   height: {
     type: String,
-    default: "100%",
+    default: "calc(100% - 2rem)",
   },
   width: {
     type: String,
@@ -28,10 +28,6 @@ let props = defineProps({
 //组件挂载时，初始化图表实例
 onMounted(() => {
   initChart();
-  // 监听窗口变化
-  window.addEventListener("resize", () => {
-    chartInstance.resize();
-  });
 });
 // 在组件卸载时清理图表实例
 onUnmounted(() => {
@@ -53,6 +49,11 @@ watch(
     chartInstance.setOption(props.options);
   }
 );
+
+// 监听窗口变化
+window.addEventListener("resize", () => {
+  chartInstance.resize();
+});
 </script>
 
 <style lang="scss" scoped></style>

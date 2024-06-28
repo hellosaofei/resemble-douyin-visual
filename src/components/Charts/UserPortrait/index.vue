@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <div>用户画像</div>
-    <Chart :options="options" class="w-full h-full" />
-  </div>
+  <Chart :options="options" class="w-full h-full" />
 </template>
 
 <script setup lang="ts" name="UserPortrait">

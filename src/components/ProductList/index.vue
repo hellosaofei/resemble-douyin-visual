@@ -1,44 +1,40 @@
 <template>
-  <div class="px-4 py-1 overflow-hidden">
-    <div>商品列表</div>
-
-    <div class="flex flex-col max-h-full">
+  <div class="goodlist-container">
+    <div class="goodlist-body">
       <!-- 列表标题 -->
-      <table class="dashboard-table m-2">
+      <table class="goodlist-title table-config">
         <thead>
-          <tr class="text-xs">
-            <th class="goodname-th w-28 text-left">
+          <tr class="title">
+            <th class="column-name">
               <div>商品名</div>
             </th>
-            <th class="text-right">
-              <div>商品点击人数</div>
-            </th>
-            <th class="text-right">
+            <th>商品点击人数</th>
+            <th>
               <div>成交件数</div>
             </th>
-            <th class="text-right">
+            <th>
               <div>成交金额</div>
             </th>
-            <th class="text-right">
+            <th>
               <div>成交订单量</div>
             </th>
-            <th class="text-right">
+            <th>
               <div>订单付款率</div>
             </th>
           </tr>
         </thead>
       </table>
       <!-- 商品列表内容 -->
-      <div class="goodlist-container">
+      <div class="goodlist-content">
         <div class="goodlist">
-          <table class="dashboard-table">
+          <table class="table-config">
             <tbody>
               <tr
                 v-for="(item, index) in tableData"
                 :key="index"
                 class="text-xs text-right"
               >
-                <td class="w-28">{{ item.name }}</td>
+                <td class="column-name">{{ item.name }}</td>
                 <td>{{ item.accessNumber }}</td>
                 <td>{{ item.dealNum }}</td>
                 <td>{{ item.dealFund }}</td>
@@ -149,13 +145,40 @@ const tableData = [
 </script>
 
 <style lang="scss">
-.dashboard-table {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-}
 .goodlist-container {
+  height: 100%;
+  padding: 4px;
+  overflow: hidden;
+  & .goodlist-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+.goodlist-title {
+  margin: 8px 0;
+  tr {
+    font-size: 0.75rem;
+    th {
+      text-align: right;
+    }
+    th:first-child {
+      text-align: left;
+    }
+  }
+}
+.goodlist-content {
   overflow: auto;
+  tr {
+    height: 4rem;
+    border-top: solid rgb(230, 230, 230, 0.5) 1px;
+    td {
+      text-align: right;
+    }
+    td:first-child {
+      text-align: left;
+    }
+  }
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -167,17 +190,13 @@ const tableData = [
     border-radius: 8px;
     background-color: #232e48;
   }
-  // &::-webkit-scrollbar-track-piece {
-  //   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  //   border-radius: 8px;
-  //   background-color: #f5f5f5;
-  // }
 }
-
-.goodlist {
-  & tr {
-    height: 4rem;
-    border-top: solid #eee 1px;
-  }
+.table-config {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.column-name {
+  width: 10rem;
 }
 </style>

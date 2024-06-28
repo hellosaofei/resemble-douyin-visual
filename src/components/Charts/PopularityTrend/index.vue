@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <div>用户画像</div>
-    <Chart :options="options" class="w-full h-full" />
-  </div>
+  <Chart :options="options" />
 </template>
 
 <script setup lang="ts" name="PopularityTrend">
@@ -40,34 +37,53 @@ const generateRandomArray = (length) => {
   return array;
 };
 const options = {
-  left: "5%",
   tooltip: {
     trigger: "axis",
   },
   legend: {
-    top: "4%",
     left: "0",
     icon: "circle",
     textStyle: {
       color: "#fff",
-      fontSize: 10,
+      fontSize: 8,
     },
+    itemHeight: 8,
+    itemWidth: 8,
   },
   xAxis: {
     type: "category",
     boundaryGap: false,
     data: xVal,
+    axisLabel: {
+      fontSize: 10,
+      color: "#fff",
+    },
+    axisTick: {
+      show: false,
+    },
   },
   yAxis: {
     type: "value",
-    axisPointer: {
-      snap: true,
+    scale: true,
+    axisLabel: {
+      fontSize: 10,
+      color: "#fff",
+      formatter: (value) => {
+        return value;
+      },
+    },
+    splitLine: {
+      lineStyle: {
+        color: "#1e293b",
+        opacity: 0.4,
+      },
     },
   },
   grid: {
-    left: "3%",
-    right: "4%",
-    bottom: "3%",
+    left: 0,
+    right: "5%",
+    bottom: 0,
+    top: "20%",
     containLabel: true,
   },
   series: [
@@ -76,6 +92,10 @@ const options = {
       type: "line",
       smooth: true,
       showSymbol: false,
+      symbol: "circle",
+      lineStyle: {
+        color: "#6363fc",
+      },
       data: generateRandomArray(xVal.length),
     },
     {
@@ -83,6 +103,10 @@ const options = {
       type: "line",
       smooth: true,
       showSymbol: false,
+      symbol: "circle",
+      lineStyle: {
+        color: "#33FFF00",
+      },
       data: generateRandomArray(xVal.length),
     },
     {
@@ -90,6 +114,10 @@ const options = {
       type: "line",
       smooth: true,
       showSymbol: false,
+      symbol: "circle",
+      lineStyle: {
+        color: "#9933FF",
+      },
       data: generateRandomArray(xVal.length),
     },
   ],

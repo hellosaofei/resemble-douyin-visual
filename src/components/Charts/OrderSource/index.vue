@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <div>订单来源</div>
-    <Chart :options="options" class="w-full h-full" />
-  </div>
+  <Chart :options="options" class="w-full h-full" />
 </template>
 
 <script setup lang="ts" name="OrderSource">
 import { Chart } from "@/components";
+import { progressProps } from "element-plus";
 
 const props = defineProps({
   data: {
@@ -19,12 +17,14 @@ const options = {
   tooltip: {
     trigger: "item",
   },
+  grid: {
+    left: "5%",
+  },
   legend: {
     right: "5%",
     top: "center",
     orient: "vertical",
     icon: "circle",
-
     formatter: function (name) {
       const currVal = props.data.filter((item) => item.name === name)[0].value;
       // return `{name|${name}}{currVal||   ${currVal}}`;
@@ -33,26 +33,25 @@ const options = {
     textStyle: {
       color: "#fff",
       fontSize: 10,
-      rich: {},
     },
+    itemHeight: 8,
+    itemWidth: 10,
   },
   series: [
     {
       name: "Access From",
       type: "pie",
-      width: "50%",
-      radius: ["45%", "55%"],
-      avoidLabelOverlap: false,
+      left: 0,
+      // width: "50%",
+      radius: ["45%", "50%"],
+      center: ["25%", "50%"],
+      padAngle: 5,
       itemStyle: {
         borderRadius: 10,
-        borderWidth: 2,
       },
       label: {
         show: false,
         position: "center",
-      },
-      labelLine: {
-        show: false,
       },
       data: props.data,
     },

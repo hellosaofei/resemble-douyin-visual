@@ -1,12 +1,10 @@
 <template>
-  <div class="pt-6 rounded-md flex flex-col gap-7">
-    <div class="text-slate-300 text-center flex flex-col gap-2">
+  <div class="data-panel-container">
+    <div class="top-part">
       <span class="deal-count-title">直播期间累计成交金额（元）：</span>
-      <span ref="totalCountTarget" class="text-7xl ml-2 mr-2 font-bold">
-        222,341,99
-      </span>
+      <span ref="totalCountTarget" class="deal-count-num">222,341,99</span>
     </div>
-    <div class="info-container grid grid-cols-5 gap-2">
+    <div class="info-container bottom-part">
       <div>
         <span>成交件数</span>
         <span ref="city1">686</span>
@@ -56,22 +54,49 @@
 </script>
 
 <style lang="scss" scoped>
+.data-panel-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  background-color: rgba(107, 103, 250, 0.5);
+  border-radius: 10px;
+  padding: 0.75rem 0;
+  & .top-part {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    column-gap: 0.5rem;
+    color: #fff;
+  }
+
+  & .bottom-part {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    & > div {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      & > span:first-child {
+        display: block;
+        font-size: 12px;
+      }
+      & > span:nth-child(2) {
+        color: #fff;
+        font-size: 1.25rem;
+        line-height: 1.725rem;
+      }
+    }
+  }
+}
 .deal-count-title {
   text-align: center;
   display: block;
 }
-.info-container > div {
-  text-align: center;
-  color: #94a3b8;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  & > span:first-child {
-    display: block;
-  }
-  & > span:nth-child(2) {
-    color: #fff;
-    font-size: 1.25rem;
-    line-height: 1.725rem;
-  }
+.deal-count-num {
+  margin: 0.5rem;
+  font-weight: 700;
+  font-size: 4rem;
 }
 </style>
