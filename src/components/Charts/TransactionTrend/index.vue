@@ -1,5 +1,5 @@
 <template>
-  <Chart :options="options" hegith />
+  <Chart :options="options" chartID="TransactionTrendChart" />
 </template>
 
 <script setup lang="ts" name="TransactionTrend">

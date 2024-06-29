@@ -1,5 +1,5 @@
 <template>
-  <Chart :options="options" class="w-full h-full" />
+  <Chart :options="options" chartID="OrderSourceChart" class="w-full h-full" />
 </template>
 
 <script setup lang="ts" name="OrderSource">
@@ -43,9 +43,9 @@ const options = {
       type: "pie",
       left: 0,
       // width: "50%",
-      radius: ["45%", "50%"],
+      radius: ["45%", "55%"],
       center: ["25%", "50%"],
-      padAngle: 5,
+      padAngle: 8,
       itemStyle: {
         borderRadius: 10,
       },

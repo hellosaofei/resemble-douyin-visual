@@ -1,13 +1,50 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
 
 html,
 body,
 #app {
   width: 100%;
   height: 100%;
+  // min-width: 375px;
+  // min-height: 650px;
   padding: 0;
   margin: 0;
   overflow: hidden;
 }
+body {
+  min-width: 1200px;
+  overflow: auto;
+}
+.chart-container {
+  border-radius: 0.5rem;
+  background: #1e293b4d;
+  padding: 0.75rem 0.5rem;
+  .chart-container-top {
+    height: 2rem;
+  }
+  .chart-container-bottom {
+    width: 100%;
+    // calc(100% - 2rem)
+    height: calc(100% - 2rem);
+  }
+}
+
+// $min-font-size: 1rem;
+// $middle-font-size: 1.6rem;
+// $max-font-size: 2.6rem;
+// $min-screen: 600px;
+// $middle-screen: 1280px;
+// $max-screen: 1960px;
+// html {
+//   font-size: 10px;
+// }
+
+// @media (min-width: $min-screen) and (max-width: $max-screen) {
+//   html {
+//     font-size: calc(
+//       $min-font-size + (2.4 - 0.6) * ((100vw - $min-screen) / (1800 - 600))
+//     );
+//   }
+// }

@@ -29,6 +29,8 @@
 .summary-container {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
   .top-part {
     text-align: center;
     display: flex;
@@ -38,7 +40,7 @@
       color: #fff;
       font-size: 1.5rem;
     }
-    div:first-child {
+    div:nth-of-type(1) {
       span {
         font-size: 1.5rem;
       }
@@ -46,7 +48,7 @@
         background-color: #fff;
         color: #000;
         border-radius: 0.5rem;
-        padding: 0 0.25rem;
+        padding: 0 0.125rem;
       }
     }
   }
@@ -60,10 +62,10 @@
 
     div:first-child {
       .live-status {
-        border-radius: 0.5rem;
+        border-radius: 0.25rem;
         color: #fff;
         background-color: #93c5fd;
-        padding: 0.25rem;
+        padding: 0.1rem;
       }
     }
   }

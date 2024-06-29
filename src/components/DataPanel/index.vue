@@ -55,6 +55,7 @@
 
 <style lang="scss" scoped>
 .data-panel-container {
+  height: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;
@@ -80,7 +81,7 @@
       line-height: 1.25rem;
       & > span:first-child {
         display: block;
-        font-size: 12px;
+        font-size: 0.75rem;
       }
       & > span:nth-child(2) {
         color: #fff;

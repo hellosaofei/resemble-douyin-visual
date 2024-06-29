@@ -158,7 +158,7 @@ const tableData = [
 .goodlist-title {
   margin: 8px 0;
   tr {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     th {
       text-align: right;
     }
@@ -170,6 +170,7 @@ const tableData = [
 .goodlist-content {
   overflow: auto;
   tr {
+    font-size: 0.75rem;
     height: 4rem;
     border-top: solid rgb(230, 230, 230, 0.5) 1px;
     td {

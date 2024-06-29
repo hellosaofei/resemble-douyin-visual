@@ -1,5 +1,5 @@
 <template>
-  <Chart :options="options" class="w-full h-full" />
+  <Chart :options="options" chartID="UserPortraitChart" />
 </template>
 
 <script setup lang="ts" name="UserPortrait">
@@ -25,7 +25,7 @@ const options = {
       type: "pie",
       silent: true,
       clockwise: true,
-      center: ["30%", "50%"],
+      center: ["30%", "40%"],
       radius: ["45%", "55%"],
       itemStyle: {
         color: "#465A98",
@@ -34,17 +34,16 @@ const options = {
       },
       label: {
         position: "center",
-        fontSize: 20,
         color: "#fff",
         textStyle: {
           rich: {
             percentage: {
-              fontSize: 20,
+              fontSize: 15,
               color: "#fff",
               fontWeight: "600",
             },
             label: {
-              fontSize: 15,
+              fontSize: 12,
               color: "#fff",
             },
           },
@@ -58,13 +57,14 @@ const options = {
         {
           value: props.data[0].value,
           itemStyle: {
-            normal: {
-              color: "#8124FF",
-            },
+            color: "#8124FF",
           },
         },
         {
           value: 100 - props.data[0].value,
+          itemStyle: {
+            color: "#263557",
+          },
         },
       ],
     },
@@ -75,20 +75,19 @@ const options = {
       silent: true,
       clockwise: true,
       startAngle: 90,
-      center: ["70%", "50%"],
+      center: ["70%", "40%"],
       label: {
         position: "center",
-        fontSize: 20,
         color: "#fff",
         textStyle: {
           rich: {
             percentage: {
-              fontSize: 20,
+              fontSize: 15,
               color: "#fff",
               fontWeight: "600",
             },
             label: {
-              fontSize: 15,
+              fontSize: 12,
               color: "#fff",
             },
           },
@@ -106,13 +105,14 @@ const options = {
         {
           value: props.data[1].value,
           itemStyle: {
-            normal: {
-              color: "#ff3272",
-            },
+            color: "#ff3272",
           },
         },
         {
           value: 100 - props.data[1].value,
+          itemStyle: {
+            color: "#263557",
+          },
         },
       ],
     },

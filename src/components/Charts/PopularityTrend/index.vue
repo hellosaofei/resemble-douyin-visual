@@ -1,5 +1,5 @@
 <template>
-  <Chart :options="options" />
+  <Chart :options="options" chartID="PopularityTrendChart" />
 </template>
 
 <script setup lang="ts" name="PopularityTrend">

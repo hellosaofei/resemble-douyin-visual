@@ -3,23 +3,30 @@
     <div class="screen-body">
       <!-- 左 -->
       <section class="screen-left">
-        <div class="left-top chart-card chart-description-parent-padding">
-          <div style="height: 2rem">
+        <div class="left-top chart-container">
+          <div class="chart-container-top">
             <span>成交趋势图</span>
           </div>
-          <TransactionTrend />
+          <div class="chart-container-bottom">
+            <!-- <TransactionTrend /> -->
+            <PopularityTrend />
+          </div>
         </div>
-        <div class="left-middle chart-card chart-description-parent-padding">
-          <div style="height: 2rem">
+        <div class="left-middle chart-container">
+          <div class="chart-container-top">
             <span>订单来源</span>
           </div>
-          <OrderSource :data="orderSourceData" />
+          <div class="chart-container-bottom">
+            <OrderSource :data="orderSourceData" />
+          </div>
         </div>
-        <div class="left-bottom chart-card chart-description-parent-padding">
-          <div style="height: 2rem">
+        <div class="left-bottom chart-container">
+          <div class="chart-container-top">
             <span>用户画像</span>
           </div>
-          <UserPortrait :data="userProtraitData" />
+          <div class="chart-container-bottom">
+            <UserPortrait :data="userProtraitData" />
+          </div>
         </div>
       </section>
       <!-- 中 -->
@@ -27,26 +34,36 @@
         <div class="middle-top">
           <TitleBar />
         </div>
-        <div class="middle-middle chart-card">
+        <div class="middle-middle">
           <DataPanel />
         </div>
-        <div class="middle-bottom chart-card chart-description-parent-padding">
-          <div style="height: 2rem">
+        <div class="middle-bottom chart-container">
+          <div class="chart-container-top">
             <span>商品列表</span>
           </div>
-          <ProductList />
+          <div class="chart-container-bottom">
+            <ProductList />
+          </div>
         </div>
       </section>
       <!-- 右 -->
       <section class="screen-right">
-        <div class="right-top chart-card chart-description-parent-padding">
-          <div style="height: 2rem">
+        <div class="right-top chart-container">
+          <div class="chart-container-top">
             <span>人气趋势图</span>
           </div>
-          <PopularityTrend />
+          <div class="chart-container-bottom">
+            <!-- <PopularityTrend /> -->
+            <TransactionTrend />
+          </div>
         </div>
-        <div class="right-bottom chart-card">
-          <RealTimeLive />
+        <div class="right-bottom chart-container">
+          <div class="chart-container-top">
+            <span>实时直播</span>
+          </div>
+          <div class="chart-container-bottom">
+            <RealTimeLive />
+          </div>
         </div>
       </section>
     </div>
@@ -117,12 +134,12 @@ const userProtraitData = [
   .screen-middle {
     display: flex;
     flex-direction: column;
-    row-gap: 0.4rem;
+    row-gap: 0.5rem;
     flex-grow: 1;
     width: 52%;
     .middle-top {
       flex: 1 1 10%;
-      min-height: 0;
+      min-height: 10%;
       max-height: 10%;
       position: relative;
     }
@@ -155,12 +172,5 @@ const userProtraitData = [
       position: relative;
     }
   }
-}
-.chart-description-parent-padding {
-  padding: 12px 8px;
-}
-.chart-card {
-  border-radius: 8px;
-  background: #1e293b4d;
 }
 </style>
