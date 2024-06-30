@@ -113,6 +113,18 @@ const userProtraitData = [
   height: 100%;
   display: flex;
   column-gap: 1rem;
+  /*设置一个背景图*/
+  // background-position: 0 0, 100% 0;
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%, 852px 281px;
+  // background-image: linear-gradient(
+  //     90deg,
+  //     rgba(26, 28, 39, 0) 0%,
+  //     #1a1c27 calc(100% - 852px),
+  //     rgba(32, 32, 53, 0.35) 64.63%,
+  //     rgba(33, 33, 57, 0.2) 100%
+  //   ),
+  //   url(https://s21.ax1x.com/2024/06/30/pkcMl4J.png);
   .screen-left {
     display: flex;
     flex-direction: column;

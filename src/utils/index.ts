@@ -9,3 +9,34 @@ export function debounce(fn: Function, delay: number) {
     }, delay);
   };
 }
+
+/**
+ * 生成指定区间内的一个随机整数
+ */
+export function generateRandomInt(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  if (max < min) {
+    [min, max] = [max, min];
+  }
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/**
+ * 生成指定区间内的一个随机整数数组，可任意指定长度
+ */
+export function generateRandomIntArray(
+  length: number,
+  min: number = 300,
+  max: number = 600
+) {
+  if (length <= 0 || !Number.isInteger(length)) {
+    throw new Error("参数length的长度不能为0，且必须为整数");
+  }
+  const array = [];
+  for (let i = 0; i < length; i++) {
+    const randomNum = Math.floor(Math.random() * (max - min)) + min;
+    array.push(randomNum);
+  }
+  return array;
+}

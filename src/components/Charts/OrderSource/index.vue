@@ -4,7 +4,6 @@
 
 <script setup lang="ts" name="OrderSource">
 import { Chart } from "@/components";
-import { progressProps } from "element-plus";
 
 const props = defineProps({
   data: {

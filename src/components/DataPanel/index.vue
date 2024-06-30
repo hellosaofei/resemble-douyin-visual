@@ -2,7 +2,9 @@
   <div class="data-panel-container">
     <div class="top-part">
       <span class="deal-count-title">直播期间累计成交金额（元）：</span>
-      <span ref="totalCountTarget" class="deal-count-num">222,341,99</span>
+      <span ref="totalCountTarget" class="deal-count-num">
+        <CountTo :end="endVal" />
+      </span>
     </div>
     <div class="info-container bottom-part">
       <div>
@@ -50,7 +52,22 @@
 </template>
 
 <script setup lang="ts">
-// import CountTo from './CountTo'
+import { ref, onUnmounted, onMounted } from "vue";
+import CountTo from "@/components/CountTo/index.vue";
+import { generateRandomInt } from "@/utils/index";
+
+const endVal = ref(22234199);
+
+let timer: any;
+onMounted(() => {
+  timer = setInterval(() => {
+    endVal.value += generateRandomInt(1, 100);
+  }, 5000);
+});
+
+onUnmounted(() => {
+  clearInterval(timer);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -60,6 +77,13 @@
   flex-direction: column;
   row-gap: 0.5rem;
   background-color: rgba(107, 103, 250, 0.5);
+  // 渐变色
+  // background: linear-gradient(
+  //   to right,
+  //   #5b66f9,
+  //   #6b31ef
+  // );
+
   border-radius: 10px;
   padding: 0.75rem 0;
   & .top-part {
@@ -81,6 +105,7 @@
       line-height: 1.25rem;
       & > span:first-child {
         display: block;
+        color: #fff;
         font-size: 0.75rem;
       }
       & > span:nth-child(2) {

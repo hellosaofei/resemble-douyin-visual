@@ -5,7 +5,7 @@ import App from "./App.vue";
 import "./styles/index.scss";
 
 // 引入resize
-import "./utils/resize";
+// import "./utils/resize";
 // 引入Pinia和vueRouter
 import router from "@/router";
 

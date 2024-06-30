@@ -4,12 +4,14 @@
 
 <script setup lang="ts" name="PopularityTrend">
 import { Chart } from "@/components";
-// const props = defineProps({
-//   data: {
-//     type: Array,
-//     required: true,
-//   },
-// });
+import { generateRandomIntArray } from "@/utils/index";
+
+const props = defineProps({
+  data: {
+    type: Array,
+    required: true,
+  },
+});
 
 const xVal = [
   "11:15",
@@ -24,18 +26,7 @@ const xVal = [
   "22:30",
   "23:45",
 ];
-const generateRandomArray = (length) => {
-  if (length <= 0) {
-    length = 0;
-  }
-  length = Math.floor(length);
-  const array = [];
-  for (let i = 0; i < length; i++) {
-    const randomNum = Math.floor(Math.random() * (601 - 300)) + 300;
-    array.push(randomNum);
-  }
-  return array;
-};
+
 const options = {
   tooltip: {
     trigger: "axis",
@@ -96,7 +87,7 @@ const options = {
       lineStyle: {
         color: "#6363fc",
       },
-      data: generateRandomArray(xVal.length),
+      data: generateRandomIntArray(xVal.length),
     },
     {
       name: "离开直播间人数",
@@ -107,7 +98,7 @@ const options = {
       lineStyle: {
         color: "#33FFF00",
       },
-      data: generateRandomArray(xVal.length),
+      data: generateRandomIntArray(xVal.length),
     },
     {
       name: "实时在线人数",
@@ -118,7 +109,7 @@ const options = {
       lineStyle: {
         color: "#9933FF",
       },
-      data: generateRandomArray(xVal.length),
+      data: generateRandomIntArray(xVal.length),
     },
   ],
 };
