@@ -48,6 +48,9 @@ const initChart = () => {
   chartInstance.setOption(props.options);
 };
 
+const updateChart = (options: any) => {
+  chartInstance.setOption(options);
+};
 // 监听series数据的变化
 watch(
   () => props.options,
@@ -63,6 +66,9 @@ window.addEventListener(
     chartInstance.resize();
   }, 200)
 );
+defineExpose({
+  updateChart,
+});
 </script>
 
 <style lang="scss" scoped></style>

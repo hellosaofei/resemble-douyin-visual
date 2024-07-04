@@ -21,8 +21,8 @@ const props = defineProps({
     default() {
       let options: CountUpOptions = {
         startVal: 0, // 开始的数字  一般设置0开始
-        decimalPlaces: 2, // 整数后的小数位
-        duration: 2, // 动画持续秒数
+        decimalPlaces: 0, // 整数后的小数位
+        duration: 3, // 动画持续秒数
         useGrouping: true, // 是否开启千分位分割
         useEasing: true, // 动画缓动效果
         smartEasingThreshold: 500, // 大于Threshold的值开启平滑缓动

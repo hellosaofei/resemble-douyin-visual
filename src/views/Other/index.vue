@@ -8,8 +8,7 @@
             <span>成交趋势图</span>
           </div>
           <div class="chart-container-bottom">
-            <!-- <TransactionTrend /> -->
-            <PopularityTrend />
+            <TransactionTrend />
           </div>
         </div>
         <div class="left-middle chart-container">
@@ -17,7 +16,7 @@
             <span>订单来源</span>
           </div>
           <div class="chart-container-bottom">
-            <OrderSource :data="orderSourceData" />
+            <OrderSource />
           </div>
         </div>
         <div class="left-bottom chart-container">
@@ -25,7 +24,7 @@
             <span>用户画像</span>
           </div>
           <div class="chart-container-bottom">
-            <UserPortrait :data="userProtraitData" />
+            <UserPortrait />
           </div>
         </div>
       </section>
@@ -53,8 +52,7 @@
             <span>人气趋势图</span>
           </div>
           <div class="chart-container-bottom">
-            <!-- <PopularityTrend /> -->
-            <TransactionTrend />
+            <PopularityTrend />
           </div>
         </div>
         <div class="right-bottom chart-container">
@@ -78,23 +76,6 @@ import {
   TransactionTrend,
   UserPortrait,
 } from "@/components/Charts";
-const orderSourceData = [
-  { value: 1048, name: "Search Engine" },
-  { value: 735, name: "Direct" },
-  { value: 580, name: "Email" },
-  { value: 484, name: "Union Ads" },
-  { value: 300, name: "Video Ads" },
-];
-const userProtraitData = [
-  {
-    name: "男性",
-    value: 18,
-  },
-  {
-    name: "女性",
-    value: 82,
-  },
-];
 </script>
 
 <style lang="scss" scoped>
@@ -104,7 +85,7 @@ const userProtraitData = [
 .screen-container {
   height: 100%;
   width: 100%;
-  padding: 10px 60px;
+  padding: 10px 40px;
   color: #fff;
   background: #283354;
 }
@@ -128,8 +109,8 @@ const userProtraitData = [
   .screen-left {
     display: flex;
     flex-direction: column;
-    row-gap: 0.8rem;
-    width: 24%;
+    row-gap: 0.5rem;
+    width: 26%;
     .left-top {
       height: 34%;
       position: relative;
@@ -146,9 +127,9 @@ const userProtraitData = [
   .screen-middle {
     display: flex;
     flex-direction: column;
-    row-gap: 0.5rem;
     flex-grow: 1;
     width: 52%;
+    row-gap: 0.5rem;
     .middle-top {
       flex: 1 1 10%;
       min-height: 10%;
@@ -171,7 +152,7 @@ const userProtraitData = [
     }
   }
   .screen-right {
-    width: 24%;
+    width: 26%;
     display: flex;
     flex-direction: column;
     row-gap: 0.8rem;

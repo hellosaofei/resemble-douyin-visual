@@ -11,5 +11,6 @@ import router from "@/router";
 
 const app = createApp(App);
 
+// app.config.globalProperties.$socket=SocketService.Instance;
 app.use(router);
 app.mount("#app");

@@ -1,17 +1,18 @@
 <template>
-  <Chart :options="options" chartID="OrderSourceChart" class="w-full h-full" />
+  <Chart
+    :options="options"
+    chartID="OrderSourceChart"
+    class="w-full h-full"
+    ref="orderSource"
+  />
 </template>
 
 <script setup lang="ts" name="OrderSource">
+import { ref, onMounted, onUnmounted } from "vue";
 import { Chart } from "@/components";
+import SocketService from "@/utils/socket";
 
-const props = defineProps({
-  data: {
-    type: Array,
-    required: true,
-  },
-});
-
+const orderSource = ref();
 const options = {
   tooltip: {
     trigger: "item",
@@ -20,28 +21,21 @@ const options = {
     left: "5%",
   },
   legend: {
-    right: "5%",
+    right: "20%",
     top: "center",
     orient: "vertical",
     icon: "circle",
-    formatter: function (name) {
-      const currVal = props.data.filter((item) => item.name === name)[0].value;
-      // return `{name|${name}}{currVal||   ${currVal}}`;
-      return `${name} ${currVal}`;
-    },
     textStyle: {
       color: "#fff",
-      fontSize: 10,
+      fontSize: 14,
     },
     itemHeight: 8,
     itemWidth: 10,
   },
   series: [
     {
-      name: "Access From",
       type: "pie",
       left: 0,
-      // width: "50%",
       radius: ["45%", "55%"],
       center: ["25%", "50%"],
       padAngle: 8,
@@ -52,10 +46,32 @@ const options = {
         show: false,
         position: "center",
       },
-      data: props.data,
     },
   ],
 };
+
+onMounted(() => {
+  SocketService.Instance.registerCallback("orderSourceData", getData);
+  SocketService.Instance.send({
+    action: "getData",
+    dataType: "orderSourceData",
+  });
+});
+onUnmounted(() => {
+  SocketService.Instance.unRegisterCallback("orderSourceData", getData);
+});
+
+function getData(res: any) {
+  // console.log("更新了数据 orderSourceData：", res);
+  const newOptions = {
+    series: [
+      {
+        data: res,
+      },
+    ],
+  };
+  orderSource.value.updateChart(newOptions);
+}
 </script>
 
 <style lang="scss" scoped></style>

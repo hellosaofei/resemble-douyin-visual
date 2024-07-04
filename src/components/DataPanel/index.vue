@@ -3,71 +3,89 @@
     <div class="top-part">
       <span class="deal-count-title">直播期间累计成交金额（元）：</span>
       <span ref="totalCountTarget" class="deal-count-num">
-        <CountTo :end="endVal" />
+        <CountTo :end="dataPanel.summaryMoney" />
       </span>
     </div>
     <div class="info-container bottom-part">
       <div>
         <span>成交件数</span>
-        <span ref="city1">686</span>
+        <span>{{ dataPanel.transitionNumGoods }}</span>
       </div>
       <div>
         <span>成交人数</span>
-        <span ref="city2">450</span>
+        <span>{{ dataPanel.transitionNumPeople }}</span>
       </div>
       <div>
         <span>点击-成交转化率</span>
-        <span ref="city3">6.1%</span>
+        <span>{{ dataPanel.conversionRate }}</span>
       </div>
       <div>
         <span>千次观看成交金额</span>
-        <span ref="city4">3080.99</span>
+        <span>{{ dataPanel.moneyOfThousandViews }}</span>
       </div>
       <div>
         <span>成交粉丝占比</span>
-        <span ref="city5">24.67%</span>
+        <span>{{ dataPanel.fansRate }} %</span>
       </div>
       <div>
         <span>平均在线人数</span>
-        <span ref="city6">236</span>
+        <span>{{ dataPanel.averageAliveNum }}</span>
       </div>
       <div>
         <span>累计观看人次</span>
-        <span ref="city7">8.29万</span>
+        <span>{{ dataPanel.totalViewNum }} 万</span>
       </div>
       <div>
         <span>新增粉丝团人数</span>
-        <span ref="city8">11</span>
+        <span>{{ dataPanel.incrementFansOfGroup }}</span>
       </div>
       <div>
         <span>新增粉丝数量</span>
-        <span ref="city9">987</span>
+        <span>{{ dataPanel.incrementFans }}</span>
       </div>
       <div>
         <span>人均观看直播时长</span>
-        <span ref="city10">29秒</span>
+        <span>{{ dataPanel.averageDuration }}秒</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted, onMounted } from "vue";
+import { ref, onUnmounted, onMounted, reactive } from "vue";
 import CountTo from "@/components/CountTo/index.vue";
-import { generateRandomInt } from "@/utils/index";
+import SocketService from "@/utils/socket";
 
-const endVal = ref(22234199);
-
-let timer: any;
+const dataPanel = reactive({
+  summaryMoney: 4350,
+  transitionNumGoods: 98,
+  transitionNumPeople: 82,
+  conversionRate: 6.98,
+  moneyOfThousandViews: 723.43,
+  fansRate: 3.88,
+  averageAliveNum: 10,
+  totalViewNum: 8.4,
+  incrementFans: 121,
+  incrementFansOfGroup: 456,
+  averageDuration: 34,
+});
 onMounted(() => {
-  timer = setInterval(() => {
-    endVal.value += generateRandomInt(1, 100);
-  }, 5000);
+  SocketService.Instance.registerCallback("dataPanelData", getData);
+  SocketService.Instance.send({
+    action: "getData",
+    dataType: "dataPanelData",
+  });
+});
+onUnmounted(() => {
+  SocketService.Instance.unRegisterCallback("dataPanelData", getData);
 });
 
-onUnmounted(() => {
-  clearInterval(timer);
-});
+function getData(res: any) {
+  // console.log("更新了数据 dataPanelData", res);
+  Object.keys(res).forEach((item) => {
+    dataPanel[item] = res[item];
+  });
+}
 </script>
 
 <style lang="scss" scoped>
@@ -75,7 +93,7 @@ onUnmounted(() => {
   height: 100%;
   display: flex;
   flex-direction: column;
-  row-gap: 0.5rem;
+  justify-content: space-around;
   background-color: rgba(107, 103, 250, 0.5);
   // 渐变色
   // background: linear-gradient(
@@ -106,7 +124,7 @@ onUnmounted(() => {
       & > span:first-child {
         display: block;
         color: #fff;
-        font-size: 0.75rem;
+        // font-size: 0.75rem;
       }
       & > span:nth-child(2) {
         color: #fff;

@@ -1,31 +1,17 @@
 <template>
-  <Chart :options="options" chartID="PopularityTrendChart" />
+  <Chart
+    :options="options"
+    chartID="PopularityTrendChart"
+    ref="PopularityTrend"
+  />
 </template>
 
 <script setup lang="ts" name="PopularityTrend">
 import { Chart } from "@/components";
-import { generateRandomIntArray } from "@/utils/index";
+import { ref, onMounted, onUnmounted } from "vue";
+import SocketService from "@/utils/socket";
 
-const props = defineProps({
-  data: {
-    type: Array,
-    required: true,
-  },
-});
-
-const xVal = [
-  "11:15",
-  "12:30",
-  "13:45",
-  "15:00",
-  "16:15",
-  "17:30",
-  "18:45",
-  "20:00",
-  "21:15",
-  "22:30",
-  "23:45",
-];
+const PopularityTrend = ref();
 
 const options = {
   tooltip: {
@@ -36,7 +22,7 @@ const options = {
     icon: "circle",
     textStyle: {
       color: "#fff",
-      fontSize: 8,
+      fontSize: 12,
     },
     itemHeight: 8,
     itemWidth: 8,
@@ -44,7 +30,6 @@ const options = {
   xAxis: {
     type: "category",
     boundaryGap: false,
-    data: xVal,
     axisLabel: {
       fontSize: 10,
       color: "#fff",
@@ -71,9 +56,9 @@ const options = {
     },
   },
   grid: {
-    left: 0,
+    left: "3%",
     right: "5%",
-    bottom: 0,
+    bottom: "3%",
     top: "20%",
     containLabel: true,
   },
@@ -85,9 +70,8 @@ const options = {
       showSymbol: false,
       symbol: "circle",
       lineStyle: {
-        color: "#6363fc",
+        color: "#776cfb",
       },
-      data: generateRandomIntArray(xVal.length),
     },
     {
       name: "离开直播间人数",
@@ -96,9 +80,8 @@ const options = {
       showSymbol: false,
       symbol: "circle",
       lineStyle: {
-        color: "#33FFF00",
+        color: "#f9cf8b",
       },
-      data: generateRandomIntArray(xVal.length),
     },
     {
       name: "实时在线人数",
@@ -107,12 +90,42 @@ const options = {
       showSymbol: false,
       symbol: "circle",
       lineStyle: {
-        color: "#9933FF",
+        color: "#8eeefe",
       },
-      data: generateRandomIntArray(xVal.length),
     },
   ],
 };
+onMounted(() => {
+  SocketService.Instance.registerCallback("PopularityData", getData);
+  SocketService.Instance.send({
+    action: "getData",
+    dataType: "PopularityData",
+  });
+});
+onUnmounted(() => {
+  SocketService.Instance.unRegisterCallback("PopularityData", getData);
+});
+
+function getData(res: any) {
+  // console.log("更新了 PopularityTrend 数据：", res);
+  const newOptions = {
+    xAxis: {
+      data: res["timeAxis"],
+    },
+    series: [
+      {
+        data: res["enterNum"],
+      },
+      {
+        data: res["leaveNum"],
+      },
+      {
+        data: res["aliveNum"],
+      },
+    ],
+  };
+  PopularityTrend.value.updateChart(newOptions);
+}
 </script>
 
 <style lang="scss" scoped></style>

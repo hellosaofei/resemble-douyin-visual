@@ -1,17 +1,13 @@
 <template>
-  <Chart :options="options" chartID="UserPortraitChart" />
+  <Chart :options="options" chartID="UserPortraitChart" ref="userPortrait" />
 </template>
 
 <script setup lang="ts" name="UserPortrait">
 import { Chart } from "@/components";
+import { ref, onMounted, onUnmounted } from "vue";
+import SocketService from "@/utils/socket";
 
-const props = defineProps({
-  data: {
-    type: Array,
-    required: true,
-  },
-});
-
+const userPortrait = ref();
 const options = {
   grid: {
     left: "5%",
@@ -27,11 +23,6 @@ const options = {
       clockwise: true,
       center: ["30%", "40%"],
       radius: ["45%", "55%"],
-      itemStyle: {
-        color: "#465A98",
-        borderRadius: 10,
-        borderWidth: 2,
-      },
       label: {
         position: "center",
         color: "#fff",
@@ -48,25 +39,7 @@ const options = {
             },
           },
         },
-        formatter: function () {
-          const text_ = `{percentage|${props.data[0].value}%}\n{label|${props.data[0].name}}`;
-          return text_;
-        },
       },
-      data: [
-        {
-          value: props.data[0].value,
-          itemStyle: {
-            color: "#8124FF",
-          },
-        },
-        {
-          value: 100 - props.data[0].value,
-          itemStyle: {
-            color: "#263557",
-          },
-        },
-      ],
     },
     {
       name: "女性",
@@ -92,32 +65,73 @@ const options = {
             },
           },
         },
-        formatter: function () {
-          const text_ = `{percentage|${props.data[1].value}%}\n{label|${props.data[1].name}}`;
-          return text_;
-        },
       },
-      itemStyle: {
-        borderRadius: 10,
-        borderWidth: 2,
-      },
-      data: [
-        {
-          value: props.data[1].value,
-          itemStyle: {
-            color: "#ff3272",
-          },
-        },
-        {
-          value: 100 - props.data[1].value,
-          itemStyle: {
-            color: "#263557",
-          },
-        },
-      ],
     },
   ],
 };
+onMounted(() => {
+  SocketService.Instance.registerCallback("userPortraitData", getData);
+  SocketService.Instance.send({
+    action: "getData",
+    dataType: "userPortraitData",
+  });
+});
+onUnmounted(() => {
+  SocketService.Instance.unRegisterCallback("userPortraitData", getData);
+});
+
+function getData(res: any) {
+  // console.log("更新了 portrait 数据：", res);
+  const newOptions = {
+    series: [
+      {
+        label: {
+          formatter: function () {
+            const text_ = `{percentage|${res[0].value}%}\n{label|${res[0].name}}`;
+            return text_;
+          },
+        },
+        data: [
+          {
+            value: res[0].value,
+            itemStyle: {
+              color: "#9ecce6",
+            },
+          },
+          {
+            value: 100 - res[0].value,
+            itemStyle: {
+              color: "#2e3456",
+            },
+          },
+        ],
+      },
+      {
+        label: {
+          formatter: function () {
+            const text_ = `{percentage|${res[1].value}%}\n{label|${res[1].name}}`;
+            return text_;
+          },
+        },
+        data: [
+          {
+            value: res[1].value,
+            itemStyle: {
+              color: "#de7ab5",
+            },
+          },
+          {
+            value: 100 - res[1].value,
+            itemStyle: {
+              color: "#2e3456",
+            },
+          },
+        ],
+      },
+    ],
+  };
+  userPortrait.value.updateChart(newOptions);
+}
 </script>
 
 <style lang="scss" scoped></style>

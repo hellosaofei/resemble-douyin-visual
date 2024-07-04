@@ -5,28 +5,15 @@
       <table class="goodlist-title table-config">
         <thead>
           <tr class="title">
-            <th class="column-name">
-              <div>商品名</div>
-            </th>
-            <th>商品点击人数</th>
-            <th>
-              <div>成交件数</div>
-            </th>
-            <th>
-              <div>成交金额</div>
-            </th>
-            <th>
-              <div>成交订单量</div>
-            </th>
-            <th>
-              <div>订单付款率</div>
+            <th v-for="(item, index) of labelData" :key="index">
+              {{ item }}
             </th>
           </tr>
         </thead>
       </table>
       <!-- 商品列表内容 -->
       <div class="goodlist-content">
-        <div class="goodlist">
+        <div class="goodlist" v-if="tableData">
           <table class="table-config">
             <tbody>
               <tr
@@ -34,7 +21,7 @@
                 :key="index"
                 class="text-xs text-right"
               >
-                <td class="column-name">{{ item.name }}</td>
+                <td>{{ item.name }}</td>
                 <td>{{ item.accessNumber }}</td>
                 <td>{{ item.dealNum }}</td>
                 <td>{{ item.dealFund }}</td>
@@ -50,98 +37,27 @@
 </template>
 
 <script setup lang="ts" name="ProductList">
-const labelData = [
-  "商品",
-  "商品名",
-  "商品点击人数",
-  "成交件数",
-  "成交金额",
-  "成交订单量",
-  "订单付款率",
-  "实际库存消耗",
-];
-const tableData = [
-  {
-    good: "hahha",
-    name: "花草小号散箱花草小号散箱花草小号散箱",
-    accessNumber: 23413,
-    dealNum: 23414,
-    dealFund: "￥8,212,213",
-    realDeal: "32,389",
-    payRate: "32.8%",
-    store: "32,131",
-  },
-  {
-    good: "hahha",
-    name: "花草小号散箱花草小号散箱花草小号散箱",
-    accessNumber: 23413,
-    dealNum: 23414,
-    dealFund: "￥8,212,213",
-    realDeal: "32,389",
-    payRate: "32.8%",
-    store: "32,131",
-  },
-  {
-    good: "hahha",
-    name: "花草小号散箱花草小号散箱花草小号散箱",
-    accessNumber: 23413,
-    dealNum: 234,
-    dealFund: "￥8,212,213",
-    realDeal: "32,389",
-    payRate: "32.8%",
-    store: "32,131",
-  },
-  {
-    good: "hahha",
-    name: "花草小号散箱花草小号散箱花草小号散箱",
-    accessNumber: 23413,
-    dealNum: 23414,
-    dealFund: "￥8,212,213",
-    realDeal: "32,389",
-    payRate: "32.8%",
-    store: "32,131",
-  },
-  {
-    good: "hahha",
-    name: "花草小号散箱花草小号散箱花草小号散箱",
-    accessNumber: 23413,
-    dealNum: 23414,
-    dealFund: "￥8,212,213",
-    realDeal: "32,389",
-    payRate: "32.8%",
-    store: "32,131",
-  },
-  {
-    good: "hahha",
-    name: "花草小号散箱花草小号散箱花草小号散箱",
-    accessNumber: 23413,
-    dealNum: 23414,
-    dealFund: "￥8,212,213",
-    realDeal: "32,389",
-    payRate: "32.8%",
-    store: "32,131",
-  },
-  {
-    good: "hahha",
-    name: "花草小号散箱花草小号散箱花草小号散箱",
-    accessNumber: 23413,
-    dealNum: 23414,
-    dealFund: "￥8,212,213",
-    realDeal: "32,389",
-    payRate: "32.8%",
-    store: "32,131",
-  },
-  {
-    good: "hahha",
-    name: "花草小号散箱花草小号散箱花草小号散箱",
-    accessNumber: 23413,
-    dealNum: 23414,
-    dealFund: "￥8,212,213",
-    realDeal: "32,389",
-    payRate: "32.8%",
-    store: "32,131",
-  },
-];
+import { onUnmounted, onMounted, ref } from "vue";
+import SocketService from "@/utils/socket";
+
+const labelData = ref(null);
+const tableData = ref(null);
+onMounted(() => {
+  SocketService.Instance.registerCallback("productListData", getData);
+  SocketService.Instance.send({
+    action: "getData",
+    dataType: "productListData",
+  });
+});
+onUnmounted(() => {
+  SocketService.Instance.unRegisterCallback("productListData", getData);
+});
+
+function getData(res: any) {
+  // console.log("更新了数据 productListData", res);
+  tableData.value = res["tableData"];
+  labelData.value = res["labelData"];
+}
 </script>
 
 <style lang="scss">
@@ -158,19 +74,20 @@ const tableData = [
 .goodlist-title {
   margin: 8px 0;
   tr {
-    font-size: 0.7rem;
+    font-size: 0.875rem;
     th {
       text-align: right;
     }
     th:first-child {
       text-align: left;
+      width: 9rem;
     }
   }
 }
 .goodlist-content {
   overflow: auto;
   tr {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     height: 4rem;
     border-top: solid rgb(230, 230, 230, 0.5) 1px;
     td {
@@ -178,6 +95,7 @@ const tableData = [
     }
     td:first-child {
       text-align: left;
+      width: 9rem;
     }
   }
   &::-webkit-scrollbar {
@@ -196,8 +114,5 @@ const tableData = [
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-}
-.column-name {
-  width: 10rem;
 }
 </style>

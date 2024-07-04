@@ -1,64 +1,23 @@
 <template>
-  <Chart :options="options" chartID="TransactionTrendChart" />
+  <Chart
+    :options="options"
+    chartID="TransactionTrendChart"
+    ref="TransactionTrend"
+  />
 </template>
 
 <script setup lang="ts" name="TransactionTrend">
 import { Chart } from "@/components";
+import { ref, onMounted, onUnmounted } from "vue";
+import SocketService from "@/utils/socket";
 
-const props = defineProps({
-  data: {
-    type: Array,
-  },
-});
-const xVal = [
-  "19:30",
-  "19:31",
-  "19:32",
-  "19:33",
-  "19:34",
-  "19:35",
-  "19:36",
-  "19:37",
-  "19:38",
-  "19:39",
-  "19:40",
-  "19:41",
-  "19:42",
-  "19:43",
-  "19:44",
-  "19:45",
-  "19:46",
-  "19:47",
-  "19:48",
-  "19:49",
-  "19:50",
-  "19:51",
-  "19:52",
-  "19:53",
-  "19:54",
-  "19:55",
-  "19:56",
-  "19:57",
-  "19:58",
-  "19:59",
-  "20:00",
-];
-const yVal2 = [
-  193, 1132, 1004, 43, 510, 1164, 842, 732, 178, 358, 399, 312, 113, 538, 1076,
-  154, 1349, 919, 1438, 823, 1011, 814, 161, 1287, 891, 467, 823, 574, 536, 254,
-  1360,
-];
-const yVal = [
-  337, 755, 367, 613, 409, 948, 923, 1174, 1067, 697, 1023, 1022, 698, 1497,
-  205, 1354, 328, 1340, 159, 210, 1478, 539, 221, 1403, 618, 150, 1127, 232,
-  646, 645,
-];
+const TransactionTrend = ref();
 
 const options = {
   grid: {
-    left: 0,
+    left: "3%",
     right: "5%",
-    bottom: 0,
+    bottom: "3%",
     top: "20%",
     containLabel: true,
   },
@@ -68,7 +27,7 @@ const options = {
     icon: "circle",
     textStyle: {
       color: "#fff",
-      fontSize: 10,
+      fontSize: 12,
     },
     itemHeight: 8,
     itemWidth: 10,
@@ -78,7 +37,6 @@ const options = {
   },
   xAxis: {
     type: "category",
-    data: xVal,
     axisLabel: {
       fontSize: 10,
       color: "#fff",
@@ -97,12 +55,17 @@ const options = {
       },
     },
     scale: true,
+    splitLine: {
+      lineStyle: {
+        color: "#1e293b",
+        opacity: 0.5,
+      },
+    },
   },
   series: [
     {
       type: "line",
       name: "成交订单数",
-      data: yVal,
       smooth: true,
       showSymbol: false,
       symbol: "circle",
@@ -113,7 +76,6 @@ const options = {
     {
       type: "line",
       name: "成交订单人数",
-      data: yVal2,
       smooth: true,
       showSymbol: false,
       symbol: "circle",
@@ -123,6 +85,35 @@ const options = {
     },
   ],
 };
+onMounted(() => {
+  // transactionTrendData
+  SocketService.Instance.registerCallback("transactionTrendData", getData);
+  SocketService.Instance.send({
+    action: "getData",
+    dataType: "transactionTrendData",
+  });
+});
+onUnmounted(() => {
+  SocketService.Instance.unRegisterCallback("transactionTrendData", getData);
+});
+
+function getData(res: any) {
+  // console.log("更新了 TransactionTrend 数据：", res);
+  const newOptions = {
+    xAxis: {
+      data: res["timeAxis"],
+    },
+    series: [
+      {
+        data: res["transitionNumGoods"],
+      },
+      {
+        data: res["transitionNumPeople"],
+      },
+    ],
+  };
+  TransactionTrend.value.updateChart(newOptions);
+}
 </script>
 
 <style lang="scss" scoped></style>
